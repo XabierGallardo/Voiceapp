@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Voiceapp by Geohot</title>
+		<meta charset="UTF-8">
+		<link rel="stylesheet" type="text/css" href="styles.css">
+		
+		<!--PeerJS-->
+                <script src="https://unpkg.com/peerjs@1.0.0/dist/peerjs.min.js"></script>
+
+	</head>
+
+	<body>
+		<!-- Interface  -->
+		<div id="call_menu">
+			<input type="text" id="call_dial">
+			<input type="button" id="call_btn" value="call" onclick="call()">
+		</div>
+		
+		<div id="call_id">
+			<h3>Call Id</h3>
+			<div id="peer_id"></div>
+		</div>
+
+
+
+		<!-- Functionality -->
+		<script>
+
+			function call() {
+				var person_to_call = document.getElementById("call_dial").value;
+				console.log("calling  " + person_to_call);
+			}
+
+
+			var peer = new Peer();
+
+			peer.on('call', function(call) {
+
+			        //Only audio will be available
+			        getUserMedia({video: false, audio: true}, function(stream) {
+			                call.answer(stream); //Answer the call with an A/V stream
+			                call.on('stream', function(remoteStream) {
+			                        //Show stream in some video/canvas element
+			                });
+
+			        }, function (err) {
+			                console.log('Failed to get local stream', err);
+			        });
+			});
+
+			peer.on('open', (id) => {
+				document.getElementById('peer_id').innerHTML = id;
+			});
+		</script>
+
+	</body>
+</html>

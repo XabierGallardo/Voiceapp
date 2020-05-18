@@ -1,0 +1,21 @@
+body, #call_dial, #call_btn {
+	font-family: FreeMono, monospace;
+	font-size: xx-large;
+	background: #262626;
+	color: white;
+}
+
+#call_dial, #call_btn {
+	border: 2px solid white;
+	border-radius: 5px;
+	padding: 5px;
+}
+
+#call_btn {
+	cursor: pointer;
+}
+
+#call_menu, #call_id {
+	margin-top: 50px;
+	text-align: center;
+}
