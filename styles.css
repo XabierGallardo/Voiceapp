@@ -1,9 +1,16 @@
 #voiceapp {
 	display: flex;
 	flex-direction: column;
-	height: 30vh;
+	width: 100%;
+	height: 50vh;
 	justify-content: space-around;
 	align-items: center;
+}
+
+#call_menu, #call_control {
+	display: flex;
+	width: 55%;
+	justify-content: space-around;
 }
 
 body, #call_dial, .call_btn, #call_control {
@@ -14,10 +21,9 @@ body, #call_dial, .call_btn, #call_control {
 }
 
 #call_control {
-	display: flex;
 	flex-direction: column;
-	align-items: center;
 	justify-content: space-between;
+	align-items: center;
 	width: 30%;
 	height: 15vh;
 }
@@ -37,3 +43,30 @@ body, #call_dial, .call_btn, #call_control {
 	border: 2px solid white;
 	border-radius: 5px;
 }
+
+@media (max-width: 1160px) {
+	#call_menu, #call_control {
+                width: 60%;
+        }
+
+	#voiceapp {
+		height: 70vh;
+	}
+
+	#call_menu {
+		flex-direction: column;
+	}
+}
+
+@media (max-width: 600px) {
+	body, #call_dial, .call_btn, #call_control {
+        	font-size: x-large;
+	}
+}
+
+@media (max-width: 480px) {
+        body, #call_dial, .call_btn, #call_control {
+                font-size: large;
+        }
+}
+

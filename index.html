@@ -38,27 +38,40 @@
 						return navigator.getUserMedia.bind(navigator);
 					}
 					if(navigator.webkitGetUserMedia) {
-						return nagigator.webkitGetUserMedia.bind(navigator);
+						return navigator.webkitGetUserMedia.bind(navigator);
 					}
 					if(navigator.mozGetUserMedia) {
 						return navigator.mozGetUserMedia.bind(navigator);
 					}
 				})();
 
+				
+				//To receive media stream from other peer
+				function onReceiveStream(stream) {
+					var audio = document.querySelector('audio');
+					console.log(audio);
+					audio.srcObject = stream;
+					audio.onloadmetadata = function (e) {
+						console.log('Now playing the audio');
+						audio.play();
+					}
+				}
+
 
 
 				function call() {
 					var person_to_call = document.getElementById("call_dial").value;
-					console.log("calling  " + person_to_call);
+					console.log('calling  ' + person_to_call);
 
 					var peer = new Peer();
 
-					var getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
+					//var getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
 					getUserMedia({video: false, audio: true}, function(stream) {
 						
 						var call = peer.call(person_to_call, stream);
 						call.on('stream', function(remoteStream) {
-							//Show stream in some video/canvas element.
+							console.log(remoteStream);
+							onReceiveStream(remoteStream);
 						});
 					}, function(err) {
 						console.log('Failed to get local stream', err);
@@ -77,7 +90,8 @@
 
 							call.answer(stream); //Answer the call with an A/V stream
 							call.on('stream', function(remoteStream) {
-								//Show stream in some video/canvas element
+								console.log(remoteStream);
+								onReceiveStream(remoteStream);
 							});
 
 						}, function (err) {
