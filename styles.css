@@ -1,21 +1,39 @@
-body, #call_dial, #call_btn {
+#voiceapp {
+	display: flex;
+	flex-direction: column;
+	height: 30vh;
+	justify-content: space-around;
+	align-items: center;
+}
+
+body, #call_dial, .call_btn, #call_control {
 	font-family: FreeMono, monospace;
 	font-size: xx-large;
 	background: #262626;
 	color: white;
 }
 
-#call_dial, #call_btn {
+#call_control {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: space-between;
+	width: 30%;
+	height: 15vh;
+}
+
+#call_dial, .call_btn {
 	border: 2px solid white;
 	border-radius: 5px;
 	padding: 5px;
 }
 
-#call_btn {
+.call_btn {
 	cursor: pointer;
 }
 
-#call_menu, #call_id {
-	margin-top: 50px;
-	text-align: center;
+#call_ctrl {
+	background-color: #262626;
+	border: 2px solid white;
+	border-radius: 5px;
 }

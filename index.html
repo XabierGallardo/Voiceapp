@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 	<head>
 		<title>Voiceapp by Geohot</title>
 		<meta charset="UTF-8">
@@ -11,48 +12,88 @@
 	</head>
 
 	<body>
-		<!-- Interface  -->
-		<div id="call_menu">
-			<input type="text" id="call_dial">
-			<input type="button" id="call_btn" value="call" onclick="call()">
+		<div id="voiceapp">
+
+			<!-- Interface  -->
+			<div id="call_menu">
+				<input type="text" id="call_dial">
+				<input type="button" class="call_btn" value="call" onclick="call()">
+				<input type="button" class="call_btn" value="number" onclick="answerer()">
+			</div>
+
+			
+			<div id="call_control">		
+				<audio controls id="call_ctrl"></audio>
+				<div id="peer_id"></div>
+			</div>
+
+
+
+			<!-- Functionality -->
+			<script>
+
+				//To avoid Illegal invocation error on media calls, we use binding to allow the use of a foreign library
+				var getUserMedia = (function() {
+					if(navigator.getUserMedia) {
+						return navigator.getUserMedia.bind(navigator);
+					}
+					if(navigator.webkitGetUserMedia) {
+						return nagigator.webkitGetUserMedia.bind(navigator);
+					}
+					if(navigator.mozGetUserMedia) {
+						return navigator.mozGetUserMedia.bind(navigator);
+					}
+				})();
+
+
+
+				function call() {
+					var person_to_call = document.getElementById("call_dial").value;
+					console.log("calling  " + person_to_call);
+
+					var peer = new Peer();
+
+					var getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
+					getUserMedia({video: false, audio: true}, function(stream) {
+						
+						var call = peer.call(person_to_call, stream);
+						call.on('stream', function(remoteStream) {
+							//Show stream in some video/canvas element.
+						});
+					}, function(err) {
+						console.log('Failed to get local stream', err);
+					});
+				}
+
+	 
+				function answerer() {
+					var peer = new Peer();
+
+					peer.on('call', function(call) {
+
+						//Only audio will be available
+						getUserMedia({video: false, audio: true}, function(stream) {
+							console.log('Receiving call');
+
+							call.answer(stream); //Answer the call with an A/V stream
+							call.on('stream', function(remoteStream) {
+								//Show stream in some video/canvas element
+							});
+
+						}, function (err) {
+							console.log('Failed to get local stream', err);
+						});
+					});
+
+					peer.on('open', (id) => {
+						document.getElementById('peer_id').innerHTML = id;
+					});
+				}
+
+			</script>
+
+
 		</div>
-		
-		<div id="call_id">
-			<h3>Call Id</h3>
-			<div id="peer_id"></div>
-		</div>
-
-
-
-		<!-- Functionality -->
-		<script>
-
-			function call() {
-				var person_to_call = document.getElementById("call_dial").value;
-				console.log("calling  " + person_to_call);
-			}
-
-
-			var peer = new Peer();
-
-			peer.on('call', function(call) {
-
-			        //Only audio will be available
-			        getUserMedia({video: false, audio: true}, function(stream) {
-			                call.answer(stream); //Answer the call with an A/V stream
-			                call.on('stream', function(remoteStream) {
-			                        //Show stream in some video/canvas element
-			                });
-
-			        }, function (err) {
-			                console.log('Failed to get local stream', err);
-			        });
-			});
-
-			peer.on('open', (id) => {
-				document.getElementById('peer_id').innerHTML = id;
-			});
-		</script>
 
 	</body>
 </html>
