@@ -2,6 +2,7 @@
 <html>
 
 	<head>
+
 		<title>Voiceapp by Geohot</title>
 		<meta charset="UTF-8">
 		<link rel="stylesheet" type="text/css" href="styles.css">
@@ -12,24 +13,24 @@
 	</head>
 
 	<body>
+
+		<!-- Main container -->
 		<div id="voiceapp">
 
-			<!-- Interface  -->
+			<!-- Text area and buttons  -->
 			<div id="call_menu">
 				<input type="text" id="call_dial">
 				<input type="button" class="call_btn" value="call" onclick="call()">
 				<input type="button" class="call_btn" value="number" onclick="answerer()">
 			</div>
 
-			
+			<!-- Audio control and number display -->
 			<div id="call_control">		
-				<audio controls id="call_ctrl"></audio>
+				<audio controls autoplay id="call_ctrl"></audio>
 				<div id="peer_id"></div>
 			</div>
 
 
-
-			<!-- Functionality -->
 			<script>
 
 				//To avoid Illegal invocation error on media calls, we use binding to allow the use of a foreign library
@@ -65,7 +66,6 @@
 
 					var peer = new Peer();
 
-					//var getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
 					getUserMedia({video: false, audio: true}, function(stream) {
 						
 						var call = peer.call(person_to_call, stream);
@@ -105,7 +105,6 @@
 				}
 
 			</script>
-
 
 		</div>
 

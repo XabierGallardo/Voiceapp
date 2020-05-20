@@ -44,6 +44,14 @@ body, #call_dial, .call_btn, #call_control {
 	border-radius: 5px;
 }
 
+
+/* Chrome, Safari, Opera */
+#call_ctrl:not(*:root) {
+	border: 0px;
+}
+
+
+/* Media queries */
 @media (max-width: 1160px) {
 	#call_menu, #call_control {
                 width: 60%;
